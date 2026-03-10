@@ -1,361 +1,343 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BtoB分析ダッシュボード - AGARIHAMA BREWERY</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container { max-width: 1400px; margin: 0 auto; }
-        header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        header h1 { font-size: 28px; margin-bottom: 10px; }
-        header p { font-size: 14px; opacity: 0.9; }
-
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .kpi-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .kpi-label { font-size: 12px; color: #666; text-transform: uppercase; margin-bottom: 8px; }
-        .kpi-value { font-size: 28px; font-weight: bold; color: #333; }
-
-        .chart-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            position: relative;
-            height: 400px;
-        }
-        .chart-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; color: #333; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        th {
-            background: #f9f9f9;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 12px;
-            color: #666;
-            border-bottom: 1px solid #ddd;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        tr:hover { background: #fafafa; }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .badge-blue { background: #e3f2fd; color: #1565c0; }
-        .badge-green { background: #e8f5e9; color: #2e7d32; }
-        .badge-orange { background: #fff3e0; color: #e65100; }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #999;
-            font-size: 12px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BtoB分析ダッシュボード - AGARIHAMA BREWERY</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#333;line-height:1.6}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;padding:30px;border-radius:12px;margin-bottom:24px}
+header h1{font-size:26px;margin-bottom:8px}
+header p{font-size:13px;opacity:.85}
+.section{margin-bottom:28px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:16px;padding-left:12px;border-left:4px solid #0f3460;color:#1a1a2e}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.kpi-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:700;color:#1a1a2e}
+.kpi-sub{font-size:12px;color:#666;margin-top:4px}
+.kpi-change{font-size:12px;font-weight:600;margin-top:2px}
+.kpi-change.up{color:#2e7d32}
+.chart-box{background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative;height:320px}
+.chart-box canvas{max-height:280px}
+.chart-title{font-size:14px;font-weight:600;margin-bottom:12px;color:#555}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f8f9fa;padding:10px 12px;text-align:left;font-weight:600;color:#555;border-bottom:2px solid #dee2e6;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eee}
+tr:hover{background:#f8f9fa}
+.badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.b-blue{background:#e3f2fd;color:#1565c0}
+.b-green{background:#e8f5e9;color:#2e7d32}
+.b-orange{background:#fff3e0;color:#e65100}
+.b-red{background:#fce4ec;color:#c62828}
+.b-purple{background:#f3e5f5;color:#7b1fa2}
+.b-teal{background:#e0f2f1;color:#00695c}
+.b-brown{background:#efebe9;color:#4e342e}
+.sim-table{font-size:12px}
+.sim-table th{padding:6px 8px;font-size:11px}
+.sim-table td{padding:6px 8px}
+.sim-table .highlight{background:#e8f5e9;font-weight:700}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.bold{font-weight:700}
+footer{text-align:center;margin-top:40px;padding:20px;color:#999;font-size:11px}
+@media(max-width:900px){.grid2,.grid3,.grid4,.grid5{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍺 BtoB分析ダッシュボード</h1>
-            <p>AGARIHAMA BREWERY - 顧客分析 | 更新：2026年03月10日</p>
-        </header>
+<div class="container">
+<header>
+<h1>AGARIHAMA BREWERY BtoB分析ダッシュボード</h1>
+<p>データ更新: 2026年3月10日 | 年度: 4月〜3月</p>
+</header>
 
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-label">期間売上</div>
-                <div class="kpi-value">¥15,042,295</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-label">注文件数</div>
-                <div class="kpi-value">547</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-label">取引先数</div>
-                <div class="kpi-value">141</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-label">平均注文額</div>
-                <div class="kpi-value">¥27,500</div>
-            </div>
-        </div>
+<!-- KPIカード -->
+<div class="section">
+<div class="section-title">今期実績サマリー（2025年度: 2025/4〜2026/2）</div>
+<div class="grid5">
+<div class="card"><div class="kpi-label">期間売上</div><div class="kpi-value">&yen;13,112,239</div><div class="kpi-change up">前期比 +271%</div></div>
+<div class="card"><div class="kpi-label">注文件数</div><div class="kpi-value">472件</div><div class="kpi-change up">前期比 +275%</div></div>
+<div class="card"><div class="kpi-label">取引先数</div><div class="kpi-value">116社</div><div class="kpi-change up">前期比 +119%</div></div>
+<div class="card"><div class="kpi-label">平均注文額</div><div class="kpi-value">&yen;27,780</div><div class="kpi-sub">前期 &yen;28,031</div></div>
+<div class="card"><div class="kpi-label">粗利合計</div><div class="kpi-value">&yen;8,313,944</div><div class="kpi-sub">粗利率 63.4%</div></div>
+</div>
+</div>
 
-        <h2 style="margin-bottom: 20px; color: #333;">📊 ビジネスタイプ別分析</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ビジネスタイプ</th>
-                    <th>取引先数</th>
-                    <th>注文件数</th>
-                    <th>売上</th>
-                    <th>平均注文額</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>105</td>
-                    <td>971</td>
-                    <td>¥10,680,121</td>
-                    <td>¥10,999</td>
-                </tr>
-                <tr>
-                    <td><span class="badge badge-blue">ビアバー・ビール専門店</span></td>
-                    <td>5</td>
-                    <td>10</td>
-                    <td>¥231,510</td>
-                    <td>¥23,151</td>
-                </tr>
-                <tr>
-                    <td><span class="badge badge-blue">ブルワリー</span></td>
-                    <td>6</td>
-                    <td>73</td>
-                    <td>¥1,233,782</td>
-                    <td>¥16,901</td>
-                </tr>
-                <tr>
-                    <td><span class="badge badge-blue">小売・ショップ</span></td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>¥16,500</td>
-                    <td>¥16,500</td>
-                </tr>
-                <tr>
-                    <td><span class="badge badge-blue">酒屋・酒販店</span></td>
-                    <td>1</td>
-                    <td>64</td>
-                    <td>¥366,608</td>
-                    <td>¥5,728</td>
-                </tr>
-                <tr>
-                    <td><span class="badge badge-blue">飲食店</span></td>
-                    <td>23</td>
-                    <td>276</td>
-                    <td>¥2,513,774</td>
-                    <td>¥9,108</td>
-                </tr>
-            </tbody>
-        </table>
+<!-- 期間比較 -->
+<div class="section">
+<div class="section-title">期間比較</div>
+<div class="card">
+<table>
+<thead><tr><th>指標</th><th class="num">前期(2024年度)</th><th class="num">今期(2025年度)</th><th class="num">成長率</th></tr></thead>
+<tbody>
+<tr><td>売上</td><td class="num">&yen;3,531,869</td><td class="num bold">&yen;13,112,239</td><td class="num"><span class="kpi-change up">+271%</span></td></tr>
+<tr><td>注文件数</td><td class="num">126件</td><td class="num bold">472件</td><td class="num"><span class="kpi-change up">+275%</span></td></tr>
+<tr><td>取引先数</td><td class="num">53社</td><td class="num bold">116社</td><td class="num"><span class="kpi-change up">+119%</span></td></tr>
+<tr><td>瓶売上</td><td class="num">&yen;2,169,409</td><td class="num bold">&yen;8,932,014</td><td class="num"><span class="kpi-change up">+312%</span></td></tr>
+<tr><td>ケグ売上</td><td class="num">&yen;1,362,460</td><td class="num bold">&yen;4,180,225</td><td class="num"><span class="kpi-change up">+207%</span></td></tr>
+<tr><td>瓶粗利(65%)</td><td class="num">&yen;1,410,116</td><td class="num bold">&yen;5,805,809</td><td class="num"><span class="kpi-change up">+312%</span></td></tr>
+<tr><td>ケグ粗利(60%)</td><td class="num">&yen;817,476</td><td class="num bold">&yen;2,508,135</td><td class="num"><span class="kpi-change up">+207%</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
-        <h2 style="margin-top: 40px; margin-bottom: 20px; color: #333;">🏆 トップ顧客（売上順）</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>順位</th>
-                    <th>店舗名</th>
-                    <th>都道府県</th>
-                    <th>タイプ</th>
-                    <th>注文件数</th>
-                    <th>売上</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>#1</strong></td>
-                    <td></td>
-                    <td>神奈川県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>100</td>
-                    <td>¥1,123,976</td>
-                </tr>
-                <tr>
-                    <td><strong>#2</strong></td>
-                    <td>island brewing</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">ブルワリー</span></td>
-                    <td>52</td>
-                    <td>¥1,001,473</td>
-                </tr>
-                <tr>
-                    <td><strong>#3</strong></td>
-                    <td>HEAVY SASORI BREWING</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-orange">飲食店</span></td>
-                    <td>17</td>
-                    <td>¥741,345</td>
-                </tr>
-                <tr>
-                    <td><strong>#4</strong></td>
-                    <td>BLUE ENTRANCE KITCHEN</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>20</td>
-                    <td>¥591,360</td>
-                </tr>
-                <tr>
-                    <td><strong>#5</strong></td>
-                    <td>日本酒 クラフトビール サケオタ</td>
-                    <td>神奈川県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>28</td>
-                    <td>¥469,399</td>
-                </tr>
-                <tr>
-                    <td><strong>#6</strong></td>
-                    <td>You&Me CRAFT BEER</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>21</td>
-                    <td>¥465,418</td>
-                </tr>
-                <tr>
-                    <td><strong>#7</strong></td>
-                    <td>一笑懸命笑撃的</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>94</td>
-                    <td>¥446,083</td>
-                </tr>
-                <tr>
-                    <td><strong>#8</strong></td>
-                    <td>bar 下北澤</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-orange">飲食店</span></td>
-                    <td>112</td>
-                    <td>¥432,960</td>
-                </tr>
-                <tr>
-                    <td><strong>#9</strong></td>
-                    <td>エグザート株式会社</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>30</td>
-                    <td>¥370,832</td>
-                </tr>
-                <tr>
-                    <td><strong>#10</strong></td>
-                    <td>酒のスマイル</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">酒屋・酒販店</span></td>
-                    <td>64</td>
-                    <td>¥366,608</td>
-                </tr>
-                <tr>
-                    <td><strong>#11</strong></td>
-                    <td>カプリシャス食堂</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-orange">飲食店</span></td>
-                    <td>52</td>
-                    <td>¥319,528</td>
-                </tr>
-                <tr>
-                    <td><strong>#12</strong></td>
-                    <td>ARMY</td>
-                    <td>東京都</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>15</td>
-                    <td>¥316,081</td>
-                </tr>
-                <tr>
-                    <td><strong>#13</strong></td>
-                    <td>株式会社RWプランニング</td>
-                    <td>東京都</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>16</td>
-                    <td>¥290,567</td>
-                </tr>
-                <tr>
-                    <td><strong>#14</strong></td>
-                    <td>ジェフ沖縄株式会社</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-orange">飲食店</span></td>
-                    <td>5</td>
-                    <td>¥287,056</td>
-                </tr>
-                <tr>
-                    <td><strong>#15</strong></td>
-                    <td>AKUBI</td>
-                    <td>東京都</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>10</td>
-                    <td>¥262,362</td>
-                </tr>
-                <tr>
-                    <td><strong>#16</strong></td>
-                    <td>BEER THE CORNER</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>49</td>
-                    <td>¥251,680</td>
-                </tr>
-                <tr>
-                    <td><strong>#17</strong></td>
-                    <td>イーストプランニング</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>5</td>
-                    <td>¥247,005</td>
-                </tr>
-                <tr>
-                    <td><strong>#18</strong></td>
-                    <td>ISHINOMAKI HOP WORKS</td>
-                    <td>宮城県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>5</td>
-                    <td>¥230,546</td>
-                </tr>
-                <tr>
-                    <td><strong>#19</strong></td>
-                    <td>クラフトビアハウス麦 BAKU</td>
-                    <td>沖縄県</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>16</td>
-                    <td>¥214,533</td>
-                </tr>
-                <tr>
-                    <td><strong>#20</strong></td>
-                    <td>BLUE ENTRANCE KITCHEN中目黒</td>
-                    <td>東京都</td>
-                    <td><span class="badge badge-blue">その他法人</span></td>
-                    <td>10</td>
-                    <td>¥203,896</td>
-                </tr>
-            </tbody>
-        </table>
+<!-- 瓶・ケグ分析 -->
+<div class="section">
+<div class="section-title">瓶・ケグ別分析</div>
+<div class="grid3">
+<div class="chart-box"><div class="chart-title">売上構成比</div><canvas id="chartBottleKeg"></canvas></div>
+<div class="chart-box"><div class="chart-title">粗利構成比</div><canvas id="chartGrossProfit"></canvas></div>
+<div class="card">
+<div class="chart-title">詳細数値</div>
+<table>
+<tr><th></th><th class="num">瓶</th><th class="num">ケグ</th></tr>
+<tr><td>売上</td><td class="num bold">&yen;8,932,014</td><td class="num bold">&yen;4,180,225</td></tr>
+<tr><td>構成比</td><td class="num">68.1%</td><td class="num">31.9%</td></tr>
+<tr><td>粗利率</td><td class="num">65%</td><td class="num">60%</td></tr>
+<tr><td>粗利額</td><td class="num">&yen;5,805,809</td><td class="num">&yen;2,508,135</td></tr>
+<tr><td>数量</td><td class="num">9,502本</td><td class="num">200樽</td></tr>
+<tr><td>リットル</td><td class="num">3,136L</td><td class="num">3,136L</td></tr>
+<tr><td>合計リットル</td><td class="num" colspan="2"><strong>6,272L</strong></td></tr>
+</table>
+</div>
+</div>
+</div>
 
-        <footer>
-            <p>更新日時: 2026年03月10日 09:41:11</p>
-            <p>このダッシュボードはPythonスクリプトで自動生成されています</p>
-        </footer>
-    </div>
+<!-- 新規/リピート分析 -->
+<div class="section">
+<div class="section-title">新規・リピート顧客分析</div>
+<div class="grid3">
+<div class="chart-box"><div class="chart-title">顧客構成</div><canvas id="chartNewRepeat"></canvas></div>
+<div class="chart-box"><div class="chart-title">平均年間LTV比較</div><canvas id="chartLTV"></canvas></div>
+<div class="card">
+<div class="chart-title">主要指標</div>
+<table>
+<tr><td>新規顧客数</td><td class="num bold">87社</td></tr>
+<tr><td>リピート顧客数</td><td class="num bold">29社</td></tr>
+<tr><td>離反顧客数</td><td class="num bold">24社</td></tr>
+<tr><td>リピート率</td><td class="num bold">54.7%</td></tr>
+<tr><td>新規LTV(年間)</td><td class="num">&yen;81,117</td></tr>
+<tr><td>リピートLTV(年間)</td><td class="num">&yen;208,794</td></tr>
+<tr><td>LTV差(リピート/新規)</td><td class="num bold">2.57倍</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ビジネスタイプ別 -->
+<div class="section">
+<div class="section-title">ビジネスタイプ別分析（今期）</div>
+<div class="grid2">
+<div class="chart-box"><div class="chart-title">売上構成</div><canvas id="chartBtype"></canvas></div>
+<div class="card">
+<table>
+<thead><tr><th>タイプ</th><th class="num">社数</th><th class="num">注文数</th><th class="num">売上</th><th class="num">瓶</th><th class="num">ケグ</th><th class="num">平均注文額</th></tr></thead>
+<tbody>
+<tr><td><span class="badge b-orange">飲食店</span></td><td class="num">106</td><td class="num">395</td><td class="num">&yen;9,959,767</td><td class="num">&yen;6,289,165</td><td class="num">&yen;3,670,602</td><td class="num">&yen;25,215</td></tr>
+<tr><td><span class="badge b-brown">問屋</span></td><td class="num">1</td><td class="num">48</td><td class="num">&yen;2,177,285</td><td class="num">&yen;2,177,285</td><td class="num">&yen;0</td><td class="num">&yen;45,360</td></tr>
+<tr><td><span class="badge b-blue">ブルワリー</span></td><td class="num">4</td><td class="num">12</td><td class="num">&yen;395,219</td><td class="num">&yen;74,998</td><td class="num">&yen;320,221</td><td class="num">&yen;32,935</td></tr>
+<tr><td><span class="badge b-green">酒屋・酒販店</span></td><td class="num">1</td><td class="num">13</td><td class="num">&yen;366,608</td><td class="num">&yen;366,608</td><td class="num">&yen;0</td><td class="num">&yen;28,201</td></tr>
+<tr><td><span class="badge b-teal">ビアバー・専門店</span></td><td class="num">4</td><td class="num">4</td><td class="num">&yen;213,360</td><td class="num">&yen;23,958</td><td class="num">&yen;189,402</td><td class="num">&yen;53,340</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- 月次トレンド -->
+<div class="section">
+<div class="section-title">月次トレンド</div>
+<div class="chart-box" style="height:400px"><canvas id="chartMonthly"></canvas></div>
+<div class="card" style="margin-top:16px;max-height:400px;overflow-y:auto">
+<table>
+<thead><tr><th>月</th><th class="num">売上</th><th class="num">注文数</th><th class="num">取引先</th><th class="num">瓶</th><th class="num">ケグ</th></tr></thead>
+<tbody id="monthlyTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- 顧客ランキング -->
+<div class="section">
+<div class="section-title">顧客ランキング TOP20（今期売上順）</div>
+<div class="card" style="overflow-x:auto">
+<table>
+<thead><tr><th>#</th><th>店舗名</th><th>都道府県</th><th>タイプ</th><th class="num">注文数</th><th class="num">売上</th><th class="num">瓶</th><th class="num">ケグ</th></tr></thead>
+<tbody id="rankingTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- 都道府県分布 -->
+<div class="section">
+<div class="section-title">都道府県別分布（今期）</div>
+<div class="chart-box" style="height:400px"><canvas id="chartPref"></canvas></div>
+</div>
+
+<!-- 来期シミュレーション -->
+<div class="section">
+<div class="section-title">来期事業計画シミュレーション（目標: 売上3,000万円）</div>
+
+<div class="grid3" style="margin-bottom:16px">
+<div class="card" style="border-left:4px solid #c62828">
+<div class="kpi-label">目標売上</div>
+<div class="kpi-value">&yen;30,000,000</div>
+<div class="kpi-sub">今期比 +229%</div>
+</div>
+<div class="card" style="border-left:4px solid #1565c0">
+<div class="kpi-label">今期の顧客平均売上</div>
+<div class="kpi-value">&yen;113,037</div>
+<div class="kpi-sub">（116社の平均）</div>
+</div>
+<div class="card" style="border-left:4px solid #2e7d32">
+<div class="kpi-label">単純計算の必要顧客数</div>
+<div class="kpi-value">265社</div>
+<div class="kpi-sub">現在116社 → +149社必要</div>
+</div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+<div class="chart-title">シミュレーション: リピート率 x 単価上昇 → 必要な新規顧客数</div>
+<p style="font-size:12px;color:#666;margin-bottom:12px">今期の顧客116社をベースに、リピート率と単価上昇率を変化させた場合に必要な新規顧客数</p>
+<table class="sim-table">
+<thead>
+<tr><th rowspan="2">リピート率</th><th colspan="5" style="text-align:center">リピート顧客の単価上昇率</th></tr>
+<tr><th class="num">据置(100%)</th><th class="num">+10%</th><th class="num">+20%</th><th class="num">+30%</th><th class="num">+50%</th></tr>
+</thead>
+<tbody id="simTable"></tbody>
+</table>
+<p style="font-size:11px;color:#999;margin-top:8px">※ 新規顧客の平均LTV: &yen;81,117 / リピート顧客の平均LTV: &yen;208,794 を基に算出</p>
+</div>
+
+<!-- ビール量算出 -->
+<div class="card">
+<div class="chart-title">目標達成に必要なビール量（現在の瓶/ケグ比率で試算）</div>
+<div class="grid3" style="margin-top:12px">
+<div style="text-align:center;padding:16px;background:#fff3e0;border-radius:8px">
+<div style="font-size:12px;color:#888">瓶（構成比 68.1%）</div>
+<div style="font-size:11px;color:#666">目標売上: &yen;20,435,901</div>
+<div style="font-size:28px;font-weight:700;color:#e65100;margin:8px 0">12,164 L</div>
+<div style="font-size:12px;color:#666">= 約 36,861本（330ml瓶）</div>
+<div style="font-size:11px;color:#999">1Lあたり &yen;1,680</div>
+</div>
+<div style="text-align:center;padding:16px;background:#e3f2fd;border-radius:8px">
+<div style="font-size:12px;color:#888">ケグ（構成比 31.9%）</div>
+<div style="font-size:11px;color:#666">目標売上: &yen;9,564,099</div>
+<div style="font-size:28px;font-weight:700;color:#1565c0;margin:8px 0">7,970 L</div>
+<div style="font-size:12px;color:#666">= 約 521樽（15.3L換算）</div>
+<div style="font-size:11px;color:#999">1Lあたり &yen;1,200</div>
+</div>
+<div style="text-align:center;padding:16px;background:#1a1a2e;border-radius:8px;color:#fff">
+<div style="font-size:12px;opacity:.8">合計必要醸造量</div>
+<div style="font-size:36px;font-weight:700;margin:12px 0">20,134 L</div>
+<div style="font-size:12px;opacity:.8">今期実績 6,272L の約 3.2倍</div>
+<div style="font-size:11px;opacity:.6;margin-top:4px">目標粗利: &yen;19,022,036（粗利率 63.4%）</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<p>AGARIHAMA BREWERY BtoB分析ダッシュボード | 更新: 2026年3月10日</p>
+</footer>
+</div>
+
+<script>
+const fmt=n=>'&yen;'+n.toLocaleString();
+
+// 瓶・ケグ売上
+new Chart(document.getElementById('chartBottleKeg'),{type:'doughnut',data:{labels:['瓶 ¥8,932,014','ケグ ¥4,180,225'],datasets:[{data:[8932014,4180225],backgroundColor:['#e65100','#1565c0']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+
+// 粗利
+new Chart(document.getElementById('chartGrossProfit'),{type:'doughnut',data:{labels:['瓶粗利(65%) ¥5,805,809','ケグ粗利(60%) ¥2,508,135'],datasets:[{data:[5805809,2508135],backgroundColor:['#ff8a65','#64b5f6']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+
+// 新規/リピート
+new Chart(document.getElementById('chartNewRepeat'),{type:'doughnut',data:{labels:['新規(87社)','リピート(29社)','離反(24社)'],datasets:[{data:[87,29,24],backgroundColor:['#2e7d32','#1565c0','#c62828']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+
+// LTV
+new Chart(document.getElementById('chartLTV'),{type:'bar',data:{labels:['新規顧客','リピート顧客'],datasets:[{label:'平均年間LTV',data:[81117,208794],backgroundColor:['#2e7d32','#1565c0']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'¥'+v.toLocaleString()}}}}});
+
+// ビジネスタイプ
+new Chart(document.getElementById('chartBtype'),{type:'pie',data:{labels:['飲食店','問屋','ブルワリー','酒屋・酒販店','ビアバー・専門店'],datasets:[{data:[9959767,2177285,395219,366608,213360],backgroundColor:['#e65100','#795548','#1565c0','#2e7d32','#00695c']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+
+// 月次トレンド（今期のみ）
+const mData=[
+{m:'2025/04',b:970260,k:210925},{m:'2025/05',b:493223,k:166650},{m:'2025/06',b:530376,k:283800},
+{m:'2025/07',b:737209,k:511530},{m:'2025/08',b:675620,k:358092},{m:'2025/09',b:1029248,k:673580},
+{m:'2025/10',b:1027829,k:896438},{m:'2025/11',b:772873,k:242550},{m:'2025/12',b:1575367,k:498928},
+{m:'2026/01',b:710633,k:155944},{m:'2026/02',b:409376,k:181788}
+];
+new Chart(document.getElementById('chartMonthly'),{type:'bar',data:{labels:mData.map(d=>d.m),datasets:[{label:'瓶',data:mData.map(d=>d.b),backgroundColor:'#ff8a65',stack:'a'},{label:'ケグ',data:mData.map(d=>d.k),backgroundColor:'#64b5f6',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{stacked:true,ticks:{callback:v=>(v/10000).toFixed(0)+'万'}},x:{stacked:true}}}});
+
+// 月次テーブル
+const allM=[
+{m:'2024/04',s:15312,o:1,sh:1,b:15312,k:0},{m:'2024/07',s:230736,o:8,sh:8,b:45936,k:184800},
+{m:'2024/08',s:224378,o:7,sh:6,b:77528,k:146850},{m:'2024/09',s:202928,o:11,sh:9,b:110528,k:92400},
+{m:'2024/10',s:262922,o:11,sh:8,b:191972,k:70950},{m:'2024/11',s:237413,o:9,sh:7,b:131813,k:105600},
+{m:'2024/12',s:265496,o:8,sh:6,b:170236,k:95260},{m:'2025/01',s:532213,o:11,sh:8,b:242638,k:289575},
+{m:'2025/02',s:325072,o:16,sh:15,b:264022,k:61050},{m:'2025/03',s:1235399,o:44,sh:25,b:919424,k:315975},
+{m:'2025/04',s:1181185,o:35,sh:23,b:970260,k:210925},{m:'2025/05',s:659873,o:28,sh:18,b:493223,k:166650},
+{m:'2025/06',s:814176,o:31,sh:18,b:530376,k:283800},{m:'2025/07',s:1248739,o:45,sh:33,b:737209,k:511530},
+{m:'2025/08',s:1033712,o:37,sh:26,b:675620,k:358092},{m:'2025/09',s:1702828,o:58,sh:36,b:1029248,k:673580},
+{m:'2025/10',s:1924267,o:65,sh:39,b:1027829,k:896438},{m:'2025/11',s:1015423,o:44,sh:27,b:772873,k:242550},
+{m:'2025/12',s:2074295,o:60,sh:32,b:1575367,k:498928},{m:'2026/01',s:866577,o:41,sh:24,b:710633,k:155944},
+{m:'2026/02',s:591164,o:28,sh:23,b:409376,k:181788}
+];
+document.getElementById('monthlyTable').innerHTML=allM.map(d=>`<tr><td>${d.m}</td><td class="num">${fmt(d.s)}</td><td class="num">${d.o}</td><td class="num">${d.sh}</td><td class="num">${fmt(d.b)}</td><td class="num">${fmt(d.k)}</td></tr>`).join('');
+
+// 顧客ランキング
+const R=[
+{s:'南島酒販株式会社',p:'沖縄県',t:'問屋',o:48,sa:2177285,b:2177285,k:0},
+{s:'BLUE ENTRANCE KITCHEN',p:'沖縄県',t:'飲食店',o:17,sa:502656,b:502656,k:0},
+{s:'日本酒 クラフトビール サケオタ',p:'神奈川県',t:'飲食店',o:11,sa:469399,b:96998,k:372401},
+{s:'You&Me CRAFT BEER',p:'沖縄県',t:'飲食店',o:12,sa:465418,b:71874,k:393544},
+{s:'エグザート株式会社',p:'沖縄県',t:'飲食店',o:23,sa:370832,b:370832,k:0},
+{s:'酒のスマイル',p:'沖縄県',t:'酒屋・酒販店',o:13,sa:366608,b:366608,k:0},
+{s:'bar 下北澤',p:'沖縄県',t:'飲食店',o:23,sa:350328,b:350328,k:0},
+{s:'一笑懸命笑撃的',p:'沖縄県',t:'飲食店',o:21,sa:338811,b:316536,k:22275},
+{s:'カプリシャス食堂',p:'沖縄県',t:'飲食店',o:15,sa:319528,b:319528,k:0},
+{s:'株式会社RWプランニング',p:'東京都',t:'飲食店',o:11,sa:290567,b:211200,k:79367},
+{s:'ジェフ沖縄株式会社',p:'沖縄県',t:'飲食店',o:4,sa:277552,b:277552,k:0},
+{s:'island brewing',p:'沖縄県',t:'ブルワリー',o:9,sa:275913,b:55638,k:220275},
+{s:'BEER THE CORNER',p:'沖縄県',t:'飲食店',o:16,sa:251680,b:251680,k:0},
+{s:'イーストプランニング',p:'沖縄県',t:'飲食店',o:1,sa:247005,b:247005,k:0},
+{s:'AKUBI',p:'東京都',t:'飲食店',o:5,sa:244212,b:0,k:244212},
+{s:'ISHINOMAKI HOP WORKS',p:'宮城県',t:'飲食店',o:3,sa:212396,b:157872,k:54524},
+{s:'BLUE ENTRANCE KITCHEN中目黒',p:'東京都',t:'飲食店',o:10,sa:203896,b:203896,k:0},
+{s:'クラフトビアハウス麦 BAKU',p:'沖縄県',t:'飲食店',o:11,sa:198033,b:5808,k:192225},
+{s:'株式会社柴田屋酒店',p:'東京都',t:'飲食店',o:1,sa:183744,b:183744,k:0},
+{s:'ビアパラ ダイニング',p:'沖縄県',t:'飲食店',o:10,sa:178046,b:28512,k:149534}
+];
+const bm={'飲食店':'b-orange','問屋':'b-brown','ブルワリー':'b-blue','酒屋・酒販店':'b-green','ビアバー・専門店':'b-teal'};
+document.getElementById('rankingTable').innerHTML=R.map((d,i)=>`<tr><td><strong>#${i+1}</strong></td><td>${d.s}</td><td>${d.p}</td><td><span class="badge ${bm[d.t]||'b-blue'}">${d.t}</span></td><td class="num">${d.o}</td><td class="num">${fmt(d.sa)}</td><td class="num">${fmt(d.b)}</td><td class="num">${fmt(d.k)}</td></tr>`).join('');
+
+// 都道府県
+const P=[
+{p:'沖縄県',s:7755506},{p:'東京都',s:2078167},{p:'神奈川県',s:1040191},{p:'埼玉県',s:799164},
+{p:'宮城県',s:362521},{p:'福岡県',s:253098},{p:'兵庫県',s:152366},{p:'福島県',s:136283},
+{p:'宮崎県',s:99954},{p:'大阪府',s:91355},{p:'山形県',s:84221},{p:'愛媛県',s:77946},
+{p:'福井県',s:41250},{p:'奈良県',s:40425},{p:'茨城県',s:31680},{p:'愛知県',s:31328},
+{p:'千葉県',s:22000},{p:'滋賀県',s:14784}
+];
+new Chart(document.getElementById('chartPref'),{type:'bar',data:{labels:P.map(d=>d.p),datasets:[{label:'売上',data:P.map(d=>d.s),backgroundColor:'#0f3460'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>(v/10000).toFixed(0)+'万'}}}}});
+
+// シミュレーションテーブル
+const S=[
+{r:50,d:[{n:221,tc:279},{n:206,tc:264},{n:191,tc:249},{n:176,tc:234},{n:146,tc:204}]},
+{r:60,d:[{n:192,tc:261},{n:174,tc:243},{n:157,tc:226},{n:139,tc:208},{n:103,tc:172}]},
+{r:70,d:[{n:161,tc:242},{n:140,tc:221},{n:120,tc:201},{n:99,tc:180},{n:57,tc:138}]},
+{r:80,d:[{n:133,tc:225},{n:109,tc:201},{n:86,tc:178},{n:62,tc:154},{n:15,tc:107}]},
+{r:90,d:[{n:102,tc:206},{n:75,tc:179},{n:49,tc:153},{n:22,tc:126},{n:0,tc:104}]}
+];
+document.getElementById('simTable').innerHTML=S.map(s=>{
+const cls=s.r===70?'highlight':'';
+return `<tr class="${cls}"><td><strong>${s.r}%</strong></td>${s.d.map(d=>`<td class="num">${d.n}社<br><span style="font-size:10px;color:#999">(計${d.tc}社)</span></td>`).join('')}</tr>`;
+}).join('');
+</script>
 </body>
 </html>
