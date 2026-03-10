@@ -299,33 +299,38 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
       <div class="carry-sub">FY2025実績ベース</div>
     </div>
     <div class="carry-item">
-      <div class="carry-label">OEM大型注文（2ヶ月に1回 × 6回）</div>
-      <div class="carry-val">¥949,636</div>
-      <div class="carry-sub">平均 ¥158,273 × 6回</div>
+      <div class="carry-label">OEM受託醸造（2ヶ月に1回 × 6本）</div>
+      <div class="carry-val">¥4,200,000</div>
+      <div class="carry-sub">¥700,000 × 6本（粗利率65%）</div>
+    </div>
+    <div class="carry-item">
+      <div class="carry-label">高単価取引先（年間3件）</div>
+      <div class="carry-val">¥600,000</div>
+      <div class="carry-sub">¥200,000 × 3件</div>
     </div>
   </div>
   <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;align-items:center">
     <div><span style="opacity:.7">キャリーオーバー合計</span></div>
-    <div style="font-size:24px;font-weight:700">¥11,856,757</div>
+    <div style="font-size:24px;font-weight:700">¥15,707,121</div>
   </div>
   <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">
     <div><span style="opacity:.7">目標 ¥30,000,000 との差額</span></div>
-    <div style="font-size:20px;font-weight:700;color:#ffab40">¥18,143,243</div>
+    <div style="font-size:20px;font-weight:700;color:#ffab40">¥14,292,879</div>
   </div>
 </div>
 
 <!-- ===== プラン① ===== -->
 <div class="plan-card">
   <h4>プラン① 新規獲得中心で3,000万円を達成する</h4>
-  <p>既存顧客のリピート率・LTVは現状維持のまま、<strong>新規顧客の獲得数だけを増やして</strong>目標を達成する計画です。</p>
-  <p>キャリーオーバー ¥11,856,757 に対し、不足額 <strong>¥18,143,243</strong> を新規獲得で埋めます。<br>
+  <p>既存顧客のリピート率・LTVは現状維持のまま、<strong>新規顧客の獲得数だけを増やして</strong>目標を達成する計画です。OEM受託醸造（年6本 ¥4,200,000）と高単価取引（年3件 ¥600,000）を織り込み済みです。</p>
+  <p>キャリーオーバー ¥15,707,121 に対し、不足額 <strong>¥14,292,879</strong> を新規獲得で埋めます。<br>
   年の後半に獲得した顧客ほど、その年度内に稼げるLTVは低くなります（LTV減衰）。4月獲得なら12ヶ月分（¥80,281）ですが、1月獲得ならわずか3ヶ月分（¥20,070）です。</p>
 
   <div style="height:260px;margin-bottom:16px"><canvas id="plan1LtvChart"></canvas></div>
 
   <div class="plan-highlight">
-    <strong>必要な新規顧客数: 418社（月平均35社）</strong><br>
-    加重平均LTV ¥43,485/社 × 418社 = ¥18,176,930
+    <strong>必要な新規顧客数: 329社（月平均28社）</strong><br>
+    加重平均LTV ¥43,485/社 × 329社 = ¥14,306,565
   </div>
 
   <table style="box-shadow:none">
@@ -335,14 +340,14 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
   </table>
 
   <div class="plan-warn">
-    <strong>課題：</strong>月35社の新規獲得はFY2025実績（月平均7.5社）の約4.7倍。営業体制の大幅拡充が必要で、現実的にはかなり難易度が高い計画です。
+    <strong>課題：</strong>月28社の新規獲得はFY2025実績（月平均7.5社）の約3.7倍。OEMと高単価取引の追加により旧プラン（月35社）から約20%改善したが、依然として営業体制の拡充が必要。
   </div>
 </div>
 
 <!-- ===== プラン② ===== -->
 <div class="plan-card">
   <h4>プラン② 既存リピート強化 + 新規獲得の複合型</h4>
-  <p>リピート顧客の<strong>取引回数を30%増加</strong>、<strong>単価を15%アップ</strong>させることで、キャリーオーバーの売上を底上げし、新規獲得のハードルを下げる計画です。</p>
+  <p>リピート顧客の<strong>取引回数を30%増加</strong>、<strong>単価を15%アップ</strong>させることで、キャリーオーバーの売上を底上げし、新規獲得のハードルを下げる計画です。OEM受託醸造（年6本 ¥4,200,000）と高単価取引（年3件 ¥600,000）も組み込んでいます。</p>
 
   <div class="sim-box">
     <h3>リピート施策の効果</h3>
@@ -360,14 +365,15 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
     <tr><th style="width:60%">項目</th><th class="text-right">金額</th></tr>
     <tr><td><strong>リピート売上</strong>（63社 × ¥185,592）</td><td class="text-right"><strong>¥11,692,296</strong></td></tr>
     <tr><td>問屋（南島酒販）</td><td class="text-right">¥2,375,220</td></tr>
-    <tr><td>OEM大型注文（6回）</td><td class="text-right">¥949,636</td></tr>
-    <tr style="background:#f0f4f8"><td><strong>小計</strong></td><td class="text-right"><strong>¥15,017,152</strong></td></tr>
-    <tr><td style="color:#c62828"><strong>不足額</strong></td><td class="text-right" style="color:#c62828"><strong>¥14,982,848</strong></td></tr>
-    <tr><td>→ 必要な新規顧客数</td><td class="text-right"><strong>345社（月29社）</strong></td></tr>
+    <tr><td>OEM受託醸造（6本 × ¥700,000）</td><td class="text-right">¥4,200,000</td></tr>
+    <tr><td>高単価取引（3件 × ¥200,000）</td><td class="text-right">¥600,000</td></tr>
+    <tr style="background:#f0f4f8"><td><strong>小計</strong></td><td class="text-right"><strong>¥18,867,516</strong></td></tr>
+    <tr><td style="color:#c62828"><strong>不足額</strong></td><td class="text-right" style="color:#c62828"><strong>¥11,132,484</strong></td></tr>
+    <tr><td>→ 必要な新規顧客数</td><td class="text-right"><strong>256社（月22社）</strong></td></tr>
   </table>
 
   <div class="plan-highlight">
-    <strong>プラン②のメリット：</strong>プラン①（月35社）に比べ、月29社の新規獲得で達成可能。既存顧客への深耕営業は新規開拓よりコスト効率が良く、実現可能性が高い。
+    <strong>プラン②のメリット：</strong>プラン①（月28社）に比べ、月22社の新規獲得で達成可能。既存顧客への深耕営業は新規開拓よりコスト効率が良く、実現可能性が高い。
   </div>
 
   <div style="margin-top:16px">
@@ -378,6 +384,22 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
       <tr><td>季節限定・コラボ商品</td><td>新商品をきっかけにした追加注文を促進</td></tr>
       <tr><td>フォローアップ営業</td><td>初回購入後1ヶ月以内に再アプローチし、リピート転換率を向上</td></tr>
     </table>
+  </div>
+</div>
+
+<!-- けやき秋→卸売 利益改善シミュレーション -->
+<div class="plan-card">
+  <h4>💡 けやき秋イベント → 卸売切替の利益分析</h4>
+  <p>秋のけやきイベント1本を中止し、そのビール（原価率20%）を卸売（原価率35%）に回した場合の利益比較です。</p>
+  <table style="box-shadow:none">
+    <tr><th style="width:40%">項目</th><th class="text-right">けやき秋（現行）</th><th class="text-right">卸売に切替</th><th class="text-right">差額</th></tr>
+    <tr><td>売上</td><td class="text-right">¥3,400,000</td><td class="text-right">¥1,942,857</td><td class="text-right" style="color:#c62828">-¥1,457,143</td></tr>
+    <tr><td>原価</td><td class="text-right">¥680,000</td><td class="text-right">¥680,000</td><td class="text-right">±0</td></tr>
+    <tr><td>イベント販管費</td><td class="text-right">¥2,200,000</td><td class="text-right">¥0</td><td class="text-right" style="color:#2e7d32">-¥2,200,000</td></tr>
+    <tr style="background:#e8f5e9"><td><strong>純利益</strong></td><td class="text-right"><strong>¥520,000</strong></td><td class="text-right"><strong>¥1,262,857</strong></td><td class="text-right" style="color:#2e7d32;font-weight:700"><strong>+¥742,857</strong></td></tr>
+  </table>
+  <div class="plan-highlight">
+    <strong>結論：</strong>売上は約146万円減少するが、イベント販管費220万円が不要になるため、純利益は約74万円改善。予算上の営業損失は -¥12,160,000 → <strong>-¥11,417,143</strong>（約74万円改善）。
   </div>
 </div>
 
@@ -427,7 +449,7 @@ new Chart(document.getElementById('repeatChart'),{type:'doughnut',data:{labels:[
 new Chart(document.getElementById('plan1LtvChart'),{type:'bar',data:{labels:['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'],datasets:[{label:'1社あたりLTV',data:[80281,73590,66900,60210,53520,46830,40140,33450,26760,20070,13380,6690],backgroundColor:function(){let a=[];for(let i=0;i<12;i++)a.push(i<6?C.blueA:C.redA);return a}(),borderColor:function(){let a=[];for(let i=0;i<12;i++)a.push(i<6?C.blue:C.red);return a}(),borderWidth:1}]},options:{maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fmtFull(v)}}},plugins:{legend:{display:false}}}});
 
 /* Plan2 stacked */
-new Chart(document.getElementById('plan2Chart'),{type:'bar',data:{labels:['現在実績','プラン①','プラン②'],datasets:[{label:'リピート売上',data:[8531901,8531901,11692296],backgroundColor:C.greenA,borderColor:C.green,borderWidth:1},{label:'問屋+OEM',data:[3324856,3324856,3324856],backgroundColor:C.teal,borderColor:'#00838f',borderWidth:1},{label:'新規売上',data:[0,18143243,14982848],backgroundColor:C.blueA,borderColor:C.blue,borderWidth:1}]},options:{maintainAspectRatio:false,scales:{y:{stacked:true,ticks:{callback:v=>fmt(v)}},x:{stacked:true}},plugins:{legend:{position:'bottom'},annotation:{annotations:{line1:{type:'line',yMin:30000000,yMax:30000000,borderColor:'#c62828',borderWidth:2,borderDash:[6,4]}}}}}});
+new Chart(document.getElementById('plan2Chart'),{type:'bar',data:{labels:['キャリーオーバー','プラン①','プラン②'],datasets:[{label:'リピート売上',data:[8531901,8531901,11692296],backgroundColor:C.greenA,borderColor:C.green,borderWidth:1},{label:'問屋+OEM+高単価',data:[7175220,7175220,7175220],backgroundColor:C.teal,borderColor:'#00838f',borderWidth:1},{label:'新規売上',data:[0,14292879,11132484],backgroundColor:C.blueA,borderColor:C.blue,borderWidth:1}]},options:{maintainAspectRatio:false,scales:{y:{stacked:true,ticks:{callback:v=>fmt(v)}},x:{stacked:true}},plugins:{legend:{position:'bottom'},annotation:{annotations:{line1:{type:'line',yMin:30000000,yMax:30000000,borderColor:'#c62828',borderWidth:2,borderDash:[6,4]}}}}}});
 </script>
 </body>
 </html>
