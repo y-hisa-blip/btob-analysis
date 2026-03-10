@@ -108,7 +108,7 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
   <div class="kpi-card"><div class="kpi-label">注文件数</div><div class="kpi-value">415</div><div class="kpi-growth">前年 114件 → +264%</div></div>
   <div class="kpi-card"><div class="kpi-label">取引先数</div><div class="kpi-value">110</div><div class="kpi-growth">前年 52社 → +112%</div></div>
   <div class="kpi-card"><div class="kpi-label">平均注文額</div><div class="kpi-value">¥22,916</div></div>
-  <div class="kpi-card"><div class="kpi-label">リピート率</div><div class="kpi-value">25.5%</div><div class="kpi-sub">28社 / 110社</div></div>
+  <div class="kpi-card"><div class="kpi-label">リピート率</div><div class="kpi-value">53.8%</div><div class="kpi-sub">FY2024の52社中 → 28社がFY2025もリピート</div></div>
 </div>
 
 <!-- 瓶ケグ + 粗利 -->
@@ -192,8 +192,9 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
     <div class="chart-box">
       <div style="height:200px"><canvas id="repeatChart"></canvas></div>
       <table style="margin-top:12px;box-shadow:none">
-        <tr><td>新規顧客</td><td>82社</td><td class="text-right">平均LTV ¥73,592</td></tr>
-        <tr><td>リピート顧客</td><td>28社</td><td class="text-right">平均LTV ¥124,142</td></tr>
+        <tr><th colspan="3" style="background:#e8f5e9;color:#2e7d32;text-align:center">リピート率 53.8%（FY2024の52社 → 28社がFY2025もリピート）</th></tr>
+        <tr><td>FY2025 リピート顧客</td><td>28社</td><td class="text-right">平均LTV ¥124,142</td></tr>
+        <tr><td>FY2025 新規顧客</td><td>82社</td><td class="text-right">平均LTV ¥73,592</td></tr>
         <tr><td>LTV倍率</td><td colspan="2" class="text-right"><strong>リピートは新規の1.7倍</strong></td></tr>
       </table>
     </div>
@@ -272,7 +273,7 @@ footer{text-align:center;padding:40px 0 20px;color:#aaa;font-size:11px}
   <h3>FY2025実績（4月〜2月・11ヶ月）</h3>
   <div class="sim-grid">
     <div class="sim-item"><div class="sim-label">一般取引売上</div><div class="sim-val">¥9,510,499</div><div class="sim-note">年間推計 ¥10,375,089</div></div>
-    <div class="sim-item"><div class="sim-label">取引先数</div><div class="sim-val">110社</div><div class="sim-note">新規82社 / リピート28社</div></div>
+    <div class="sim-item"><div class="sim-label">取引先数</div><div class="sim-val">110社</div><div class="sim-note">リピート28社(53.8%) / 新規82社</div></div>
     <div class="sim-item"><div class="sim-label">リピートLTV</div><div class="sim-val">¥124,142</div><div class="sim-note">年間換算 ¥135,427</div></div>
     <div class="sim-item"><div class="sim-label">新規LTV</div><div class="sim-val">¥73,592</div><div class="sim-note">年間換算 ¥80,281</div></div>
   </div>
@@ -420,7 +421,7 @@ new Chart(document.getElementById('typeChart'),{type:'bar',data:{labels:['飲食
 new Chart(document.getElementById('prefChart'),{type:'bar',data:{labels:['沖縄県','東京都','神奈川県','埼玉県','宮城県','兵庫県','福島県','宮崎県','福岡県','大阪府'],datasets:[{data:[5061441,1616751,882979,799164,230521,152366,136283,99954,96051,91355],backgroundColor:C.blueA,borderColor:C.blue,borderWidth:1}]},options:{indexAxis:'y',maintainAspectRatio:false,scales:{x:{ticks:{callback:v=>fmt(v)}}},plugins:{legend:{display:false}}}});
 
 /* リピート */
-new Chart(document.getElementById('repeatChart'),{type:'doughnut',data:{labels:['リピート（28社）','新規のみ（82社）'],datasets:[{data:[28,82],backgroundColor:[C.green,'#ccc'],borderWidth:0}]},options:{cutout:'55%',plugins:{legend:{position:'bottom'}},maintainAspectRatio:false}});
+new Chart(document.getElementById('repeatChart'),{type:'doughnut',data:{labels:['リピート 28社（53.8%）','新規 82社'],datasets:[{data:[28,82],backgroundColor:[C.green,'#ccc'],borderWidth:0}]},options:{cutout:'55%',plugins:{legend:{position:'bottom'}},maintainAspectRatio:false}});
 
 /* Plan1 LTV Chart */
 new Chart(document.getElementById('plan1LtvChart'),{type:'bar',data:{labels:['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'],datasets:[{label:'1社あたりLTV',data:[80281,73590,66900,60210,53520,46830,40140,33450,26760,20070,13380,6690],backgroundColor:function(){let a=[];for(let i=0;i<12;i++)a.push(i<6?C.blueA:C.redA);return a}(),borderColor:function(){let a=[];for(let i=0;i<12;i++)a.push(i<6?C.blue:C.red);return a}(),borderWidth:1}]},options:{maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fmtFull(v)}}},plugins:{legend:{display:false}}}});
